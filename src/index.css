@@ -1,0 +1,176 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 15%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 183 100% 53%;
+    --primary-foreground: 222 47% 11%;
+
+    --secondary: 270 80% 53%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 223 47% 20%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 300 100% 50%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 223 47% 20%;
+    --input: 223 47% 20%;
+    --ring: 183 100% 53%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 222 47% 11%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 183 100% 53%;
+    --sidebar-primary-foreground: 222 47% 11%;
+    --sidebar-accent: 223 47% 17%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 223 47% 20%;
+    --sidebar-ring: 183 100% 53%;
+  }
+
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 98%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 183 100% 35%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 270 80% 45%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 210 40% 93%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 300 100% 45%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 183 100% 35%;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 183 100% 35%; 
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 183 100% 35%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-vorld-dark text-foreground font-inter overflow-x-hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-orbitron;
+  }
+}
+
+@layer components {
+  .vorld-container {
+    @apply container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .glass-card {
+    @apply bg-opacity-20 bg-vorld-darker backdrop-blur-md border border-vorld-blue/30 rounded-lg shadow-lg;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-center;
+  }
+
+  .section-subtitle {
+    @apply text-xl text-muted-foreground mb-12 text-center max-w-3xl mx-auto;
+  }
+
+  .glow-text {
+    @apply text-vorld-blue animate-glow;
+  }
+
+  .glow-border {
+    @apply border border-vorld-blue shadow-[0_0_10px_rgba(12,255,225,0.5)];
+  }
+  
+  .glow-image {
+    @apply filter drop-shadow-[0_0_8px_rgba(255,255,255,0.6)] animate-pulse-slow;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-vorld-blue via-vorld-purple to-vorld-pink text-transparent bg-clip-text animate-pulse-slow;
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 bg-vorld-blue text-vorld-dark font-semibold rounded-md hover:bg-opacity-80 transition-all duration-300 shadow-[0_0_15px_rgba(12,255,225,0.5)] hover:shadow-[0_0_20px_rgba(12,255,225,0.7)];
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 bg-transparent border border-vorld-purple text-foreground font-semibold rounded-md hover:bg-vorld-purple/10 transition-all duration-300;
+  }
+
+  .grid-bg {
+    @apply bg-grid-pattern bg-[size:25px_25px];
+  }
+}
+
+.font-inter {
+  font-family: 'Inter', sans-serif;
+}
+
+.font-orbitron {
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-vorld-darker;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-vorld-blue/50 rounded-full hover:bg-vorld-blue/70 transition-all duration-200;
+}

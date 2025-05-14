@@ -1,0 +1,23 @@
+
+<svg width="1440" height="800" viewBox="0 0 1440 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g opacity="0.4">
+    <rect x="720" y="100" width="1" height="1" transform="rotate(45 720 100)" stroke="#0CFFE1" stroke-width="0.2"/>
+    <rect x="740" y="120" width="1" height="1" transform="rotate(45 740 120)" stroke="#8A2BE2" stroke-width="0.2"/>
+    <rect x="760" y="140" width="1" height="1" transform="rotate(45 760 140)" stroke="#FF00FF" stroke-width="0.2"/>
+    <rect x="700" y="80" width="1" height="1" transform="rotate(45 700 80)" stroke="#0CFFE1" stroke-width="0.2"/>
+    <rect x="680" y="60" width="1" height="1" transform="rotate(45 680 60)" stroke="#8A2BE2" stroke-width="0.2"/>
+  </g>
+  <g opacity="0.2">
+    <circle cx="720" cy="400" r="200" stroke="#0CFFE1" stroke-width="0.5" stroke-dasharray="4 4"/>
+    <circle cx="720" cy="400" r="300" stroke="#8A2BE2" stroke-width="0.5" stroke-dasharray="8 8"/>
+    <circle cx="720" cy="400" r="400" stroke="#FF00FF" stroke-width="0.5" stroke-dasharray="12 12"/>
+  </g>
+  <g opacity="0.1">
+    <line x1="0" y1="200" x2="1440" y2="200" stroke="#0CFFE1" stroke-width="0.5"/>
+    <line x1="0" y1="400" x2="1440" y2="400" stroke="#8A2BE2" stroke-width="0.5"/>
+    <line x1="0" y1="600" x2="1440" y2="600" stroke="#FF00FF" stroke-width="0.5"/>
+    <line x1="480" y1="0" x2="480" y2="800" stroke="#0CFFE1" stroke-width="0.5"/>
+    <line x1="720" y1="0" x2="720" y2="800" stroke="#8A2BE2" stroke-width="0.5"/>
+    <line x1="960" y1="0" x2="960" y2="800" stroke="#FF00FF" stroke-width="0.5"/>
+  </g>
+</svg>

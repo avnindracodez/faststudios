@@ -1,0 +1,5 @@
+
+project_id = "twmwrwbtyxeceavsijka"
+
+[functions.send-contact]
+verify_jwt = false
