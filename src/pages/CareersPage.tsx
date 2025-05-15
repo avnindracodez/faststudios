@@ -173,22 +173,10 @@ const CareersPage = () => {
   // Testimonials
   const testimonials = [
     {
-      quote: "Working at Vorld has been the highlight of my career. I've been able to push my creative boundaries while collaborating with an amazing team.",
-      name: "Sensei",
-      role: "Senior Developer",
-      image: "https://cdn.discordapp.com/avatars/778685211147239485/f85389f8fd49f655ca101b055e080b1e.png?size=4096"
-    },
-    {
-      quote: "I love that I can contribute to games played by millions while working in an environment that values work-life balance and creative input.",
-      name: "AviDaddyXD",
+      quote: "Working here has allowed me to grow as a leader while collaborating with an incredibly talented team. I take pride in turning vision into action and helping our projects reach their full potential.",
+      name: "@9sets",
       role: "Project Manager",
-      image: "https://cdn.discordapp.com/avatars/1190333350192361657/c2cc10de5b36ff74206413c318eeec9a.png?size=4096"
-    },
-    {
-      quote: "The collaborative culture at Vorld means my ideas are heard and valued. We're truly building the future of Roblox experiences together.",
-      name: "Chico",
-      role: "Builder",
-      image: "https://cdn.discordapp.com/avatars/298531715926851586/1af40fc2099cd1489358d2db1ac3aae3.png?size=4096"
+      image: "https://cdn.discordapp.com/attachments/1363496516643324137/1372640257987580025/bx3mxee.webp?ex=6827825b&is=682630db&hm=e17ad2a731784686f227ff752d05315bd7d3a120a61e6f59b374b6c3011ee391&"
     }
   ];
 

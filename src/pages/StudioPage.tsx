@@ -112,7 +112,7 @@ const StudioPage = () => {
               About the <span className="gradient-text">Studio</span>
             </h1>
             <p className="text-lg text-muted-foreground mb-8">
-              Vorld is a visionary game development studio focused on pushing the boundaries
+              Fast Studios is a visionary game development studio focused on pushing the boundaries
               of what's possible within the Roblox platform.
             </p>
           </motion.div>
