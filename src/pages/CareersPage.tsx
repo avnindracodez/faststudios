@@ -308,7 +308,7 @@ const CareersPage = () => {
         <div className="absolute bottom-20 right-10 w-80 h-80 bg-vorld-purple/5 rounded-full blur-3xl"></div>
         
         <div className="vorld-container relative z-10">
-          <h2 className="text-3xl font-bold text-center mb-16">Why Work With <span className="gradient-text">Vorld</span></h2>
+          <h2 className="text-3xl font-bold text-center mb-16">Why Work With <span className="gradient-text">Fast Studios?</span></h2>
           
           <div className="grid md:grid-cols-3 gap-6">
             {benefits.map((benefit, index) => (

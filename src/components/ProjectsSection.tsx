@@ -16,21 +16,21 @@ const ProjectsSection = () => {
   const projects = [
     {
       id: 1,
-      title: "Revealing Soon",
+      title: "Pokemon Tower Defense",
       description: "",
-      image: "",
-      category: "roleplay",
+      image: "https://cdn.discordapp.com/attachments/1363496516643324137/1372603049759080598/tHr7moi.png?ex=68275fb4&is=68260e34&hm=eaadcff909d4535673a7d2d160fc468e6493a11768f75a496507ed9797ee362b&",
+      category: "Adventure",
       stats: {
-        players: "0+",
+        players: "-",
         development: "6 months",
         awards: ""
       }
     },
     {
       id: 2,
-      title: "Revealing Soon",
+      title: "Fish",
       description: "",
-      image: "",
+      image: "https://cdn.discordapp.com/attachments/1363496516643324137/1372603358921232385/2aMqNMB.png?ex=68275ffe&is=68260e7e&hm=5a6a5c8154350fd56b1a27cb016c5bd9435537b6f48fc72284d64c6893d062f5&",
       category: "simulation",
       stats: {
         players: "0",
@@ -40,9 +40,9 @@ const ProjectsSection = () => {
     },
     {
       id: 3,
-      title: "Revealing Soon!",
+      title: "Dragol Ball",
       description: "",
-      image: "",
+      image: "https://media.discordapp.net/attachments/1363496516643324137/1372602597676023848/l0DKK0m.png?ex=68275f49&is=68260dc9&hm=2699f88103486a7d13f6ee095c0832d39c364afd0ba7b65eb0a0eb3fd472e19d&=&format=webp&quality=lossless&width=810&height=810",
       category: "adventure",
       stats: {
         players: "0+",
@@ -52,9 +52,9 @@ const ProjectsSection = () => {
     },
     {
       id: 4,
-      title: "Not Decided Yet",
+      title: "Royal High",
       description: "",
-      image: "",
+      image: "https://media.discordapp.net/attachments/1363496516643324137/1372602597676023848/l0DKK0m.png?ex=68275f49&is=68260dc9&hm=2699f88103486a7d13f6ee095c0832d39c364afd0ba7b65eb0a0eb3fd472e19d&=&format=webp&quality=lossless&width=810&height=810",
       category: "simulation",
       stats: {
         players: "0+",

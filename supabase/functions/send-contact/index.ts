@@ -2,7 +2,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 
 // Use the Discord webhook provided
-const discordWebhookUrl = "https://discord.com/api/webhooks/1371826101541933169/DBmDVvm-U7uR8SgtOl7NpqYaJgd8YRsholWDRlG-7wqbF7yV6xaC7C2hAv3zCBXDaLB6";
+const discordWebhookUrl = "https://discord.com/api/webhooks/1372606770253660292/LBuQ2R2HyBQLoSidQ2mR_8jJqgIychHFp3WRed6EbTo8trW2hfTtn7PnfJAP4Vfv73n4";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -54,8 +54,8 @@ const handler = async (req: Request): Promise<Response> => {
         ].filter(Boolean),
         timestamp: new Date().toISOString(),
         footer: {
-          text: "Vorld Studio Careers System",
-          icon_url: "https://vorld-studio.com/favicon.ico"
+          text: "Fast Studios Careers System",
+          icon_url: "https://media.discordapp.net/attachments/1363496516643324137/1372602598196121640/jjVXCAf.png?ex=68275f49&is=68260dc9&hm=229bc78d0b228946fc4ae0001ec2f63c4ea05b09650a4f04119013cc1ffd85cb&=&format=webp&quality=lossless&width=810&height=810"
         },
       };
     } else {
@@ -74,8 +74,8 @@ const handler = async (req: Request): Promise<Response> => {
         ].filter(Boolean),
         timestamp: new Date().toISOString(),
         footer: {
-          text: "Vorld Studio Contact System",
-          icon_url: "https://vorld-studio.com/favicon.ico"
+          text: "Fast Studios Contact System",
+          icon_url: "https://media.discordapp.net/attachments/1363496516643324137/1372602598196121640/jjVXCAf.png?ex=68275f49&is=68260dc9&hm=229bc78d0b228946fc4ae0001ec2f63c4ea05b09650a4f04119013cc1ffd85cb&=&format=webp&quality=lossless&width=810&height=810"
         },
       };
     }

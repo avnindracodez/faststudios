@@ -8,73 +8,63 @@ import { Code, Award, Users, Calendar, Zap } from 'lucide-react';
 const StudioPage = () => {
   const teamMembers = [
     {
-      name: 'Poppelloppeskram',
+      name: '@reverselight',
       role: 'Founder & Director',
-      image: 'https://cdn.discordapp.com/attachments/1341086940505837601/1372344684243849237/image.png?ex=68266f15&is=68251d95&hm=dcc988aeca835f2b13cc905c8b6e29168e63db8dbb0a5fb9a8c93720b28d02b1&',
-      bio: 'Visionary game designer with 4+ years in the UGC industry.'
+      image: 'https://cdn.discordapp.com/attachments/1363496516643324137/1372604931348893696/kLEXRT0.webp?ex=68276175&is=68260ff5&hm=1ff5170f7604a6ecb6b89e065ff0b93d5f69951339be9db5cac46f8e1b78cef5&',
+      bio: 'Game designer and investor with 2 years of experience in UGC.'
     },
     {
-      name: 'AviDaddyXD',
+      name: '@setdupe',
       role: 'Project Manager',
-      image: 'https://images-ext-1.discordapp.net/external/FpOdmgwcN6hOcgpkPVY3hKZ5ShpDyw6iOZZCq0pIjDQ/%3Fsize%3D4096/https/cdn.discordapp.com/avatars/1190333350192361657/c2cc10de5b36ff74206413c318eeec9a.png?format=webp&quality=lossless&width=320&height=320',
-      bio: 'The best project manager to exist on Earth!'
+      image: 'https://cdn.discordapp.com/attachments/1363496516643324137/1372605397411561684/vcgZCXG.webp?ex=682761e4&is=68261064&hm=2551beb49c34d5969e86a74afc9d02c2fc954313877b4bf096ebc72febe38c51&',
+      bio: 'Keeps the project running smoothly by turning vision into structure, and chaos into progress'
     },
     {
-      name: 'Reverselight',
-      role: 'Investor & Founder',
-      image: 'https://images-ext-1.discordapp.net/external/E52AyDiGFUsSHergFf13ZUe5-GFLFQH8j5mnx-K1dhw/%3Fsize%3D4096/https/cdn.discordapp.com/avatars/332084272796008450/c0d73b4f57de1df54c238f4190547f2a.png?format=webp&quality=lossless&width=940&height=940',
-      bio: 'The name & role says it all.'
-    },
-    {
-      name: 'Sensei',
+      name: '@therealdevrose',
       role: 'Lead Scripter',
-      image: 'https://images-ext-1.discordapp.net/external/dU8WqD6HHj6o_Q6EPcKPIZP-cOdqlaK3FlXR9LGnHAw/%3Fsize%3D4096/https/cdn.discordapp.com/avatars/778685211147239485/f85389f8fd49f655ca101b055e080b1e.png?format=webp&quality=lossless&width=134&height=134',
-      bio: 'Programming expert specialized in Roblox & Lua development.'
+      image: 'https://cdn.discordapp.com/attachments/1363496516643324137/1372605562142982305/rPtzWiZ.webp?ex=6827620b&is=6826108b&hm=6ea2d0bfb06a101c255580630cb981ce8b6a3e4352ef6523d702408edc39d7d7&',
+      bio: 'Just a girl who can code'
     },
     {
-      name: 'Abotachi',
+      name: '@yamisukehiro2077',
       role: 'Lead Scripter',
-      image: 'https://cdn.discordapp.com/avatars/747935370351738900/eda8d48ffd9f19853448fb75c6bab100.png?size=4096',
-      bio: 'Specializes in creating complex game systems and mechanics.'
+      image: 'https://cdn.discordapp.com/attachments/1363496516643324137/1372606591626383471/FRCyVLA.png?ex=68276301&is=68261181&hm=c3ad68b70344baf38490742f5d47638a85107e84f78cf5f2fe5aa5d596c9cef2&',
+      bio: 'Brings scripts to life!'
     },
     {
-      name: 'Floopy from temuuuu',
-      role: 'Community Manager',
-      image: 'https://cdn.discordapp.com/avatars/1260303715189919794/b17f103b4ff24c20ab4dd9a253d8521b.png?size=4096',
-      bio: 'The bridge between our players and development team.'
+      name: '@ditto ',
+      role: 'UGC Manager',
+      image: 'https://cdn.discordapp.com/attachments/1363496516643324137/1372607744195956776/kB2ttKD.png?ex=68276414&is=68261294&hm=e65d255cfd625155c6792b90a0ba27734e9a0b628b2c07f12d0dae3af79c6bae&',
+      bio: 'UGC modeler with 3+ years in the industry, making your favorite 3d models.'
+    },
+    {
+      name: '@mac',
+      role: 'Lead VFX',
+      image: 'https://cdn.discordapp.com/attachments/1363496516643324137/1372613214692577361/kDxKhqZ.webp?ex=6827692c&is=682617ac&hm=7b80d13b95b3713182eeb361711fb5a057afde97b7bc882a1570ad5f537e3ed8&',
+      bio: 'Specializes in making the best virtual effects.'
     }
   ];
 
   const timelineEvents = [
     {
-      year: 'January 2025',
-      title: 'Vorld Founded',
-      description: 'Poppelloppeskram establishes Vorld with a vision to push Roblox development to new heights.'
+      year: '26th May, 2022',
+      title: 'Fast Studios Founded',
+      description: 'Created and established by reverslight on the name astrava'
     },
     {
-      year: 'January 2025',
+      year: '28th August, 2024',
+      title: 'Expansion',
+      description: 'Expanded to UGC.'
+    },
+    {
+      year: '15th May, 2025',
       title: 'Team Expansion',
-      description: 'Grew from 3 to 10 team members.'
+      description: 'Expanded team from 7 members to over 50 team members!'
     },
     {
-      year: 'April 2025',
-      title: 'Roblox Partnership',
-      description: 'Selected as an official partner with discord.gg/bloxzy'
-    },
-    {
-      year: 'June 2025',
-      title: 'Cricket Reborn Release',
-      description: 'A cricket based roblox game released by Vorld'
-    },
-    {
-      year: 'June 2025',
-      title: 'Project 456 Release',
-      description: 'The most realistic roblox game based on squid game was launched by Vorld'
-    },
-    {
-      year: 'August 2025',
-      title: 'Global Expansion',
-      description: 'Expanded to 25+ team members worldwide.'
+      year: '16th May, 2025',
+      title: 'Rebrand',
+      description: 'Rebranded to Fast Studios'
     }
   ];
 
@@ -279,7 +269,7 @@ const StudioPage = () => {
           
           <div className="mt-16 text-center">
             <p className="text-lg mb-6">Want to see more of our creative process?</p>
-            <button className="btn-primary text-lg">Visit Our YouTube Channel</button>
+            <button className="btn-primary text-lg"><a href="https://www.youtube.com/@FastStudi">Visit Our YouTube Channel</a></button>
           </div>
         </div>
       </section>

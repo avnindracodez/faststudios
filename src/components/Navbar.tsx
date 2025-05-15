@@ -33,8 +33,8 @@ const Navbar = () => {
           <Link to="/" className="mr-8">
             <div className="w-10 h-10 relative overflow-visible">
               <img 
-                src="https://cdn.discordapp.com/attachments/1343620493361549362/1372337784244666449/388610c48016fa2d048ace5ebe326c12-removebg-preview.png?ex=682668a8&is=68251728&hm=a57b649db0f815011db70a81372f4f1defc8967f8c35e12d17b10927cfe100c4&" 
-                alt="Vorld Logo" 
+                src="https://cdn.discordapp.com/attachments/1363496516643324137/1372608746739597504/l0DKK0m-removebg-preview.png?ex=68276503&is=68261383&hm=8dafdc9afd7b07184e1dfaa1aaf5ce1d5833ee24dc7d2e1c70440ff7080f3ee5&" 
+                alt="Fast Studios Logo" 
                 className="w-full h-full object-contain glow-image"
               />
             </div>

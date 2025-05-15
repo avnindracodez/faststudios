@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import { motion } from 'framer-motion';
 import { MessageSquare, Github, Twitter, Instagram, Youtube, Zap } from 'lucide-react';
 
-const DISCORD_INVITE = "ryHr3EEUjs";
+const DISCORD_INVITE = "9skc77bSSh";
 const DISCORD_GUILD_API = `https://discord.com/api/v10/invites/${DISCORD_INVITE}?with_counts=true&with_expiration=true`;
 
 const CommunityPage = () => {
@@ -44,7 +44,7 @@ const CommunityPage = () => {
     {
       name: 'Discord',
       icon: <MessageSquare className="h-6 w-6" />,
-      url: 'https://discord.gg/ryHr3EEUjs',
+      url: 'https://discord.gg/9skc77bSSh',
       color: '#5865F2'
     },
     {
@@ -62,7 +62,7 @@ const CommunityPage = () => {
     {
       name: 'YouTube',
       icon: <Youtube className="h-6 w-6" />,
-      url: '#',
+      url: 'https://www.youtube.com/@FastStudi',
       color: '#FF0000'
     },
     {
@@ -144,7 +144,7 @@ const CommunityPage = () => {
               Join Our <span className="gradient-text">Community</span>
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
-              Connect with other players, stay updated on development, and help shape the future of Vorld's games.
+              Connect with other players, stay updated on development, and help shape the future of Fast Studio's games.
             </p>
             <motion.div
               initial={{ opacity: 0 }}
@@ -152,7 +152,7 @@ const CommunityPage = () => {
               transition={{ delay: 0.3, duration: 0.5 }}
             >
               <button className="btn-primary text-lg px-8 py-3">
-                Join Our Discord
+                <a href="https://discord.gg/9skc77bSSh">Join Our Discord</a>
               </button>
             </motion.div>
           </motion.div>

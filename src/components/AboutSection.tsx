@@ -5,10 +5,10 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const AboutSection = () => {
   const stats = [
-    { label: 'Years of Experience', value: '0+' },
-    { label: 'Projects Completed', value: '0+' },
-    { label: 'Active Users', value: '0+' },
-    { label: 'Team Members', value: '10+' },
+    { label: 'Years of Experience', value: '3+' },
+    { label: 'Projects Completed', value: '5+' },
+    { label: 'Active Users', value: '-' },
+    { label: 'Team Members', value: '50+' },
   ];
 
   const features = [
@@ -44,7 +44,7 @@ const AboutSection = () => {
       <div className="vorld-container relative z-10">
         <div className="flex flex-col items-center mb-16">
           <h2 className="section-title">
-            <span className="gradient-text">About</span> Vorld
+            <span className="gradient-text">About</span> Fast Studios
           </h2>
           <p className="section-subtitle">
             We are a team of passionate developers, designers, and creators focused on building the next generation of immersive Roblox experiences.
@@ -74,7 +74,7 @@ const AboutSection = () => {
             <div className="flex flex-col justify-center animate-slide-in" style={{ animationDelay: '0.2s' }}>
               <h4 className="text-xl font-bold mb-4">Pushing Boundaries</h4>
               <p className="text-muted-foreground mb-6">
-                At Vorld, we believe in pushing the technical and creative boundaries of the Roblox platform. 
+                At Fast Studios, we believe in pushing the technical and creative boundaries of the Roblox platform. 
                 We're constantly innovating, researching, and experimenting with new techniques to create experiences 
                 that stand out in the vast ecosystem.
               </p>
@@ -93,7 +93,7 @@ const AboutSection = () => {
                 <blockquote className="italic text-lg text-center">
                   "Our mission is to transform the Roblox landscape by creating extraordinary experiences that inspire, 
                   engage, and bring joy to millions of players worldwide."
-                  <footer className="text-sm text-muted-foreground mt-4">— Poppelloppeskram, Founder</footer>
+                  <footer className="text-sm text-muted-foreground mt-4">— ReverseLight, Founder & Director</footer>
                 </blockquote>
               </div>
             </div>

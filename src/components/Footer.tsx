@@ -13,7 +13,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10 mb-12">
           <div className="lg:col-span-2">
             <h2 className="text-2xl font-orbitron font-bold mb-4">
-              <span className="text-vorld-blue animate-glow">V</span>ORLD
+              <span className="text-vorld-blue animate-glow">Fast</span>Studios
             </h2>
             <p className="text-muted-foreground mb-6 max-w-md">
               Transforming the Roblox landscape with innovative game development and creative solutions that push the boundaries of what's possible.
@@ -45,11 +45,11 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-bold mb-4">Navigation</h3>
             <ul className="space-y-3">
-              <li><a href="#home" className="text-muted-foreground hover:text-vorld-blue transition-colors duration-300">Home</a></li>
-              <li><a href="#about" className="text-muted-foreground hover:text-vorld-blue transition-colors duration-300">About</a></li>
-              <li><a href="#services" className="text-muted-foreground hover:text-vorld-blue transition-colors duration-300">Services</a></li>
-              <li><a href="#projects" className="text-muted-foreground hover:text-vorld-blue transition-colors duration-300">Projects</a></li>
-              <li><a href="#contact" className="text-muted-foreground hover:text-vorld-blue transition-colors duration-300">Contact</a></li>
+              <li><a href="/" className="text-muted-foreground hover:text-vorld-blue transition-colors duration-300">Home</a></li>
+              <li><a href="/games" className="text-muted-foreground hover:text-vorld-blue transition-colors duration-300">Games</a></li>
+              <li><a href="/studio" className="text-muted-foreground hover:text-vorld-blue transition-colors duration-300">Studio</a></li>
+              <li><a href="/community" className="text-muted-foreground hover:text-vorld-blue transition-colors duration-300">Community</a></li>
+              <li><a href="/contact" className="text-muted-foreground hover:text-vorld-blue transition-colors duration-300">Contact</a></li>
             </ul>
           </div>
           
@@ -65,7 +65,7 @@ const Footer = () => {
         
         <div className="border-t border-vorld-blue/10 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-muted-foreground text-sm">
-            &copy; {new Date().getFullYear()} Vorld Studio. All rights reserved.
+            &copy; {new Date().getFullYear()} Fast Studios. All rights reserved.
           </p>
           
           <button 

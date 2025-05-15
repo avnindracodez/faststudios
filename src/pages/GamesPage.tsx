@@ -9,8 +9,8 @@ import { Search, Filter, Clock } from 'lucide-react';
 const games = [
   {
     id: 1,
-    title: 'Crystal Guardians',
-    image: '/placeholder.svg',
+    title: 'Fish',
+    image: 'https://cdn.discordapp.com/attachments/1363496516643324137/1372603358921232385/2aMqNMB.png?ex=68275ffe&is=68260e7e&hm=5a6a5c8154350fd56b1a27cb016c5bd9435537b6f48fc72284d64c6893d062f5&',
     genre: 'Adventure',
     description: 'Embark on an epic journey to protect the crystal realm from dark forces. Discover magical artifacts, battle mythical creatures, and unveil the secrets of an ancient civilization in this breathtaking adventure.',
     playerCount: '2.3M+',
@@ -19,22 +19,22 @@ const games = [
   },
   {
     id: 2,
-    title: 'Metropolis Mayhem',
-    image: '/placeholder.svg',
-    genre: 'Action',
-    description: 'Survive in a cyberpunk city filled with challenges and unexpected twists. Battle rival gangs, complete dangerous missions, and rise to power in the neon-lit streets of a futuristic dystopia.',
-    playerCount: '4.7M+',
-    date: '2023-01-20',
+    title: 'Royal High',
+    image: 'https://cdn.discordapp.com/attachments/1363496516643324137/1372639025143349308/qiA7vup.png?ex=68278135&is=68262fb5&hm=0b4584e8d05438e52c1a5cdbe116f5331a7536281e7d13bf29bb6e0dd871d8b9&',
+    genre: 'Adevnture',
+    description: 'A magical roleplaying game where elegance meets fantasy. Attend classes, dress in dazzling outfits, and explore a dreamy realm filled with secrets, fashion, and royal drama.',
+    playerCount: '0M+',
+    date: '2025-01-26',
     releaseDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000 + 3600000) // 14 days and 1 hour from now
   },
   {
     id: 3,
-    title: 'Sky Pirates',
-    image: '/placeholder.svg',
+    title: 'Pokemon Tower Defense',
+    image: 'https://cdn.discordapp.com/attachments/1363496516643324137/1372603049759080598/tHr7moi.png?ex=68275fb4&is=68260e34&hm=eaadcff909d4535673a7d2d160fc468e6493a11768f75a496507ed9797ee362b&',
     genre: 'RPG',
-    description: 'Command your airship and battle rival pirates in the clouds. Form alliances, discover uncharted floating islands, and hunt for legendary treasures hidden across the vast sky world.',
-    playerCount: '1.8M+',
-    date: '2024-02-10',
+    description: 'Build your dream team and defend against waves of enemies using your Pokémon! Catch, trade, and evolve Pokémon across various maps while ranking up to become the ultimate Pokémon Master.',
+    playerCount: '0M+',
+    date: '2025-02-10',
     releaseDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000 + 7200000) // 14 days and 2 hours from now
   }
 ];
@@ -136,7 +136,7 @@ const GameCard = ({ game, index }: { game: any, index: number }) => {
   const [showModal, setShowModal] = useState(false);
   const controls = useAnimation();
   const [isHovered, setIsHovered] = useState(false);
-  const [isRevealed, setIsRevealed] = useState(false);
+  const [isRevealed, setIsRevealed] = useState(true);
   
   // Staggered entry animation
   useEffect(() => {
@@ -412,27 +412,25 @@ const GameCard = ({ game, index }: { game: any, index: number }) => {
                   >
                     <h3 className="text-xl font-bold mb-4">Development Insights</h3>
                     <p className="text-muted-foreground mb-6">
-                      Our team spent 8 months crafting this immersive experience, 
-                      focusing on responsive controls and innovative gameplay mechanics
-                      to create something truly unique in the Roblox ecosystem.
+                      Every game we build is crafted with care, creativity, and countless hours of iteration to deliver an experience that feels truly unique.
                     </p>
                     
                     <h3 className="text-xl font-bold mb-4">Player Achievements</h3>
                     <div className="grid grid-cols-2 gap-4 mb-8">
                       <div className="glass-card p-4 text-center">
-                        <div className="text-vorld-blue text-2xl font-bold">12.5M</div>
+                        <div className="text-vorld-blue text-2xl font-bold">0M+</div>
                         <div className="text-sm text-muted-foreground">Total Plays</div>
                       </div>
                       <div className="glass-card p-4 text-center">
-                        <div className="text-vorld-purple text-2xl font-bold">87%</div>
+                        <div className="text-vorld-purple text-2xl font-bold">0%</div>
                         <div className="text-sm text-muted-foreground">Positive Rating</div>
                       </div>
                       <div className="glass-card p-4 text-center">
-                        <div className="text-vorld-pink text-2xl font-bold">45 min</div>
+                        <div className="text-vorld-pink text-2xl font-bold">0+ min</div>
                         <div className="text-sm text-muted-foreground">Avg. Play Time</div>
                       </div>
                       <div className="glass-card p-4 text-center">
-                        <div className="text-vorld-blue text-2xl font-bold">350K</div>
+                        <div className="text-vorld-blue text-2xl font-bold">0+</div>
                         <div className="text-sm text-muted-foreground">Daily Players</div>
                       </div>
                     </div>

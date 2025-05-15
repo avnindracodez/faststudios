@@ -92,7 +92,7 @@ const HeroSection = () => {
             className="lg:w-1/2 text-center lg:text-left mb-12 lg:mb-0"
           >
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 parallax">
-              Vorld –<br/><span className="gradient-text">Where the Future</span><br/>of Roblox is Built
+              Fast Studios –<br/><span className="gradient-text">Where the Future</span><br/>of Roblox is Built
             </h1>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto lg:mx-0 parallax" style={{ '--parallax-speed': '0.2' } as React.CSSProperties}>
               Pushing the boundaries of what's possible in the Roblox ecosystem with cutting-edge development and visionary design.
@@ -104,7 +104,7 @@ const HeroSection = () => {
               className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 parallax"
             >
               <Button className="btn-primary flex items-center gap-2 text-lg">
-                Join the Future <ArrowRight size={16} />
+                Discord <ArrowRight size={16} />
               </Button>
               <Button variant="outline" className="btn-secondary text-lg">
                 View Games
@@ -121,8 +121,8 @@ const HeroSection = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-vorld-blue via-vorld-purple to-vorld-pink rounded-2xl opacity-20 blur-xl"></div>
               <div className="absolute inset-0 glass-card rounded-2xl glow-border backdrop-blur-xl p-6 flex items-center justify-center">
                 <img 
-                  src="https://cdn.discordapp.com/attachments/1343620493361549362/1372337096177483827/388610c48016fa2d048ace5ebe326c12.png?ex=68266804&is=68251684&hm=1c4418e1bd4978ce5bc65d292a429dafa047cbe5759b2c1e9600877dd5ee1412&" 
-                  alt="Vorld Hero" 
+                  src="https://media.discordapp.net/attachments/1363496516643324137/1372602598196121640/jjVXCAf.png?ex=68275f49&is=68260dc9&hm=229bc78d0b228946fc4ae0001ec2f63c4ea05b09650a4f04119013cc1ffd85cb&=&format=webp&quality=lossless&width=810&height=810" 
+                  alt="Fast Stuios" 
                   className="w-full h-full object-cover rounded-lg"
                 />
               </div>
