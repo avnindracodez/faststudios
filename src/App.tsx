@@ -9,6 +9,11 @@ import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
 import LoadingScreen from "@/components/LoadingScreen";
 import CustomCursor from "@/components/CustomCursor";
+import LoginPage from "./pages/Login";
+import TicketsPage from "./pages/Tickets";
+import Navbar from "@/components/Navbar"; 
+import ProfilePage from "./pages/Profile";
+import SettingsPage from "./pages/Settings";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -16,12 +21,11 @@ const App = () => {
   return (
     <>
       {loading ? (
-        // Loading screen shown before router mounts
         <LoadingScreen onComplete={() => setLoading(false)} />
       ) : (
-        // Main app after loading
         <BrowserRouter>
           <CustomCursor />
+          <Navbar /> {/* ✅ Always present */}
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/games" element={<GamesPage />} />
@@ -29,6 +33,10 @@ const App = () => {
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/careers" element={<CareersPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/tickets" element={<TicketsPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

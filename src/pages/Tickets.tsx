@@ -1,401 +1,280 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import TicketChat from "@/components/TicketChat";
+import TicketSettings from "@/components/TicketSettings";
 
-interface Ticket {
-  id: string;
-  title: string;
-  description: string;
-  status: string;
-  claimed_by: string | null;
-  user_id: string;
-  created_at: string;
-  closed_at: string | null;
-}
+const FILTERS = ["All", "Mine", "Open", "Claimed"] as const;
+type Filter = typeof FILTERS[number];
 
-interface TicketMessage {
-  id: string;
-  ticket_id: string;
-  user_id: string | null;
-  message: string;
-  created_at: string;
-}
-
-// Insert payload types for strong typing
-interface TicketInsert {
-  title: string;
-  description: string;
-  user_id: string;
-}
-
-interface TicketMessageInsert {
-  ticket_id: string;
-  user_id: string | null;
-  message: string;
-}
-
-const EDGE_FUNCTION_WEBHOOK_URL =
-  "https://twmwrwbtyxeceavsijka.supabase.co/functions/v1/send-contact";
-
-const Tickets = () => {
-  const [tickets, setTickets] = useState<Ticket[]>([]);
-  const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
-  const [messages, setMessages] = useState<TicketMessage[]>([]);
-  const [messageInput, setMessageInput] = useState("");
-  const [titleInput, setTitleInput] = useState("");
-  const [descInput, setDescInput] = useState("");
-  const [loading, setLoading] = useState(false);
+const TicketsPage = () => {
+  const [tickets, setTickets] = useState<any[]>([]);
+  const [selectedTicket, setSelectedTicket] = useState<any | null>(null);
+  const [filter, setFilter] = useState<Filter>("All");
+  const [role, setRole] = useState<string>("user");
   const [userId, setUserId] = useState<string | null>(null);
+  const [newReplies, setNewReplies] = useState<Record<string, boolean>>({});
 
-  // Get current user ID from Supabase auth
+  // Fetch user session & role
   useEffect(() => {
-    const user = supabase.auth.user();
-    if (user) setUserId(user.id);
+    supabase.auth.getSession().then(({ data: sessionData }) => {
+      if (sessionData.session) {
+        const user = sessionData.session.user;
+        setUserId(user.id);
+        // fetch role
+        supabase
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", user.id)
+          .then(({ data }) => {
+            if (data && data.length > 0) setRole(data[0].role);
+            else setRole("user");
+          });
+      }
+    });
   }, []);
 
-  // Fetch tickets where user is creator or claimer
-  const loadTickets = async () => {
-    if (!userId) return;
-    setLoading(true);
-    const { data, error } = await supabase
-      .from<Ticket>("tickets")
-      .select("*")
-      .or(`user_id.eq.${userId},claimed_by.eq.${userId}`)
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      console.error(error);
-    } else {
-      setTickets(data ?? []);
-    }
-    setLoading(false);
-  };
+  // Fetch tickets based on filter & user
+  useEffect(() => {
+    fetchTickets();
+  }, [filter, userId]);
 
   useEffect(() => {
-    if (userId) loadTickets();
-  }, [userId]);
-
-  // Load messages for selected ticket
-  const loadMessages = async (ticketId: string) => {
-    const { data, error } = await supabase
-      .from<TicketMessage>("ticket_messages")
-      .select("*")
-      .eq("ticket_id", ticketId)
-      .order("created_at", { ascending: true });
-
-    if (error) {
-      console.error(error);
-    } else {
-      setMessages(data ?? []);
-    }
-  };
-
-  // Send webhook notification via Supabase Edge Function
-  const sendWebhook = async (content: string) => {
-    try {
-      const res = await fetch(EDGE_FUNCTION_WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content }),
-      });
-      if (!res.ok) {
-        const text = await res.text();
-        console.error("Webhook error:", text);
-      }
-    } catch (err) {
-      console.error("Failed sending webhook:", err);
-    }
-  };
-
-  // Create a new ticket
-  const createTicket = async () => {
-    if (!titleInput.trim() || !descInput.trim()) {
-      alert("Please enter both title and description");
-      return;
-    }
-    if (!userId) {
-      alert("You must be logged in to create a ticket");
-      return;
-    }
-    setLoading(true);
-
-    const newTicket: TicketInsert = {
-      title: titleInput.trim(),
-      description: descInput.trim(),
-      user_id: userId,
-    };
-
-    const { error } = await supabase.from("tickets").insert(newTicket);
-
-    if (error) {
-      alert(error.message);
-    } else {
-      sendWebhook(`🆕 New ticket created by <@${userId}>: **${titleInput}**`);
-      setTitleInput("");
-      setDescInput("");
-      await loadTickets();
-    }
-    setLoading(false);
-  };
-
-  // Claim a ticket (assign to current user)
-  const claimTicket = async (ticket: Ticket) => {
-    if (!userId) {
-      alert("You must be logged in to claim tickets");
-      return;
-    }
-    setLoading(true);
-    const { error } = await supabase
-      .from("tickets")
-      .update({ claimed_by: userId, status: "claimed" })
-      .eq("id", ticket.id);
-
-    if (error) alert(error.message);
-    else {
-      sendWebhook(`✅ Ticket **${ticket.title}** claimed by <@${userId}>`);
-      await loadTickets();
-    }
-    setLoading(false);
-  };
-
-  // Close ticket
-  const closeTicket = async (ticket: Ticket) => {
-    if (!userId) {
-      alert("You must be logged in to close tickets");
-      return;
-    }
-    setLoading(true);
-    const { error } = await supabase
-      .from("tickets")
-      .update({ status: "closed", closed_at: new Date().toISOString() })
-      .eq("id", ticket.id);
-
-    if (error) alert(error.message);
-    else {
-      sendWebhook(`🔒 Ticket **${ticket.title}** closed by <@${userId}>`);
-      await loadTickets();
-      setSelectedTicket(null);
-    }
-    setLoading(false);
-  };
-
-  // Delete ticket
-  const deleteTicket = async (ticket: Ticket) => {
-    if (!window.confirm("Are you sure? This action cannot be undone.")) return;
-    setLoading(true);
-    const { error } = await supabase.from("tickets").delete().eq("id", ticket.id);
-
-    if (error) alert(error.message);
-    else {
-      sendWebhook(`🗑️ Ticket **${ticket.title}** deleted by <@${userId}>`);
-      await loadTickets();
-      setSelectedTicket(null);
-    }
-    setLoading(false);
-  };
-
-  // Send message to a ticket
-  const sendMessage = async () => {
-    if (!selectedTicket || !messageInput.trim()) return;
-    if (!userId) {
-      alert("You must be logged in to send messages");
-      return;
-    }
-    setLoading(true);
-
-    const newMessage: TicketMessageInsert = {
-      ticket_id: selectedTicket.id,
-      user_id: userId,
-      message: messageInput.trim(),
-    };
-
-    const { error } = await supabase.from("ticket_messages").insert(newMessage);
-
-    if (error) alert(error.message);
-    else {
-      sendWebhook(
-        `💬 New message on ticket **${selectedTicket.title}** by <@${userId}>`
-      );
-      setMessageInput("");
-      await loadMessages(selectedTicket.id);
-    }
-    setLoading(false);
-  };
-
-  // Reload messages when selected ticket changes
-  useEffect(() => {
-    if (selectedTicket) loadMessages(selectedTicket.id);
-    else setMessages([]);
+    if (!selectedTicket) return;
+    // Reset new reply badge on open
+    setNewReplies((prev) => ({ ...prev, [selectedTicket.id]: false }));
   }, [selectedTicket]);
 
-  return (
-    <div className="vorld-container py-10 flex flex-col md:flex-row gap-10 min-h-screen">
-      {/* Tickets List */}
-      <div className="w-full md:w-1/3 bg-vorld-dark p-6 rounded-lg shadow-lg flex flex-col">
-        <h2 className="text-2xl font-bold mb-6">Tickets</h2>
+  // Setup real-time updates on tickets & messages
+  useEffect(() => {
+    const ticketSub = supabase
+      .channel("tickets")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "tickets" },
+        (payload) => {
+          setTickets((prev) => [...prev, payload.new]);
+        }
+      )
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "tickets" },
+        (payload) => {
+          setTickets((prev) =>
+            prev.map((t) => (t.id === payload.new.id ? payload.new : t))
+          );
+          // If updated ticket is not currently open, mark as having new replies
+          if (selectedTicket?.id !== payload.new.id) {
+            setNewReplies((prev) => ({ ...prev, [payload.new.id]: true }));
+          }
+        }
+      )
+      .subscribe();
 
-        <div className="mb-6">
-          <input
-            type="text"
-            placeholder="Ticket Title"
-            className="w-full p-2 mb-2 rounded border border-gray-600 bg-vorld-dark text-white"
-            value={titleInput}
-            onChange={(e) => setTitleInput(e.target.value)}
-            disabled={loading}
-          />
-          <textarea
-            placeholder="Ticket Description"
-            className="w-full p-2 rounded border border-gray-600 bg-vorld-dark text-white resize-none"
-            rows={3}
-            value={descInput}
-            onChange={(e) => setDescInput(e.target.value)}
-            disabled={loading}
-          />
-          <button
-            onClick={createTicket}
-            disabled={loading}
-            className="mt-3 w-full btn-primary"
+    const msgSub = supabase
+      .channel("ticket_messages")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "ticket_messages" },
+        (payload) => {
+          // Optionally update messages if you keep messages in parent component
+          // Here we'll just mark tickets with new replies if not selected
+          const tid = payload.new.ticket_id;
+          if (selectedTicket?.id !== tid) {
+            setNewReplies((prev) => ({ ...prev, [tid]: true }));
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(ticketSub);
+      supabase.removeChannel(msgSub);
+    };
+  }, [selectedTicket]);
+
+  async function fetchTickets() {
+    if (!userId) return;
+
+    let query = supabase.from("tickets").select("*");
+
+    if (filter === "Mine") {
+      query = query.eq("created_by", userId);
+    } else if (filter === "Open") {
+      query = query.eq("status", "open");
+    } else if (filter === "Claimed") {
+      query = query.not("claimed_by", "is", null);
+    }
+
+    const { data, error } = await query.order("created_at", { ascending: false });
+
+    if (error) {
+      toast.error("Failed to load tickets");
+      return;
+    }
+
+    setTickets(data || []);
+  }
+
+  async function claimTicket(id: string) {
+    if (role !== "admin") return toast.error("Admin only");
+    const { error } = await supabase
+      .from("tickets")
+      .update({ claimed_by: userId })
+      .eq("id", id);
+    if (error) toast.error("Failed to claim");
+  }
+
+  async function closeTicket(id: string) {
+    if (role !== "admin") return toast.error("Admin only");
+    const { error } = await supabase
+      .from("tickets")
+      .update({ status: "closed" })
+      .eq("id", id);
+    if (error) toast.error("Failed to close");
+  }
+
+  async function deleteTicket(id: string) {
+    if (role !== "admin") return toast.error("Admin only");
+    const { error } = await supabase.from("tickets").delete().eq("id", id);
+    if (error) toast.error("Failed to delete");
+    else if (selectedTicket?.id === id) setSelectedTicket(null);
+  }
+
+  const canCreateTicket = !tickets.some(
+    (t) =>
+      t.created_by === userId &&
+      (t.status === "open" || t.status === "claimed")
+  );
+
+  return (
+    <div className="flex flex-col md:flex-row gap-6 p-6 max-w-7xl mx-auto">
+      {/* Tickets List */}
+      <aside className="md:w-96 bg-vorld-dark/70 rounded-lg p-4 flex flex-col">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold">Tickets</h2>
+          <select
+            className="bg-vorld-dark border border-vorld-blue rounded-md p-1 px-2"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value as Filter)}
           >
-            Create Ticket
-          </button>
+            {FILTERS.map((f) => (
+              <option key={f} value={f}>
+                {f} {newReplies[tickets.find((t) => t.status === f.toLowerCase())?.id || ""] ? "•" : ""}
+              </option>
+            ))}
+          </select>
         </div>
 
+        {!canCreateTicket && (
+          <div className="mb-2 p-2 bg-vorld-pink/30 rounded-md text-sm font-medium text-pink-300">
+            You already have an open or claimed ticket.
+          </div>
+        )}
+
         <div className="overflow-y-auto flex-1">
-          {loading && !tickets.length ? (
-            <p>Loading tickets...</p>
-          ) : tickets.length === 0 ? (
-            <p>No tickets found.</p>
-          ) : (
-            tickets.map((ticket) => (
-              <div
+          {tickets.length === 0 && (
+            <div className="text-muted-foreground text-center py-6">
+              No tickets found.
+            </div>
+          )}
+          <ul className="space-y-2">
+            {tickets.map((ticket) => (
+              <li
                 key={ticket.id}
-                className={`p-3 mb-3 rounded cursor-pointer border ${
+                className={`p-3 rounded-lg cursor-pointer flex justify-between items-center ${
                   selectedTicket?.id === ticket.id
-                    ? "border-vorld-blue bg-vorld-blue/10"
-                    : "border-transparent hover:border-vorld-blue"
+                    ? "bg-vorld-blue/50"
+                    : "hover:bg-vorld-blue/20"
                 }`}
                 onClick={() => setSelectedTicket(ticket)}
               >
-                <h3 className="font-semibold">{ticket.title}</h3>
-                <p className="text-sm text-gray-400 truncate">
-                  {ticket.description}
-                </p>
-                <p className="text-xs mt-1">
-                  Status:{" "}
-                  <span
-                    className={`font-semibold ${
-                      ticket.status === "open"
-                        ? "text-green-400"
-                        : ticket.status === "claimed"
-                        ? "text-yellow-400"
-                        : "text-red-400"
-                    }`}
-                  >
-                    {ticket.status}
-                  </span>
-                </p>
-                {ticket.claimed_by && (
-                  <p className="text-xs text-gray-500">
-                    Claimed by: {ticket.claimed_by === userId ? "You" : ticket.claimed_by}
-                  </p>
-                )}
-              </div>
-            ))
-          )}
-        </div>
-      </div>
-
-      {/* Selected Ticket Details and Chat */}
-      <div className="w-full md:w-2/3 bg-vorld-dark p-6 rounded-lg shadow-lg flex flex-col">
-        {selectedTicket ? (
-          <>
-            <h2 className="text-2xl font-bold mb-4">{selectedTicket.title}</h2>
-            <p className="mb-6">{selectedTicket.description}</p>
-
-            <div className="flex gap-4 mb-4 flex-wrap">
-              {selectedTicket.status === "open" && (
-                <button
-                  onClick={() => claimTicket(selectedTicket)}
-                  disabled={loading}
-                  className="btn-primary"
-                >
-                  Claim Ticket
-                </button>
-              )}
-              {selectedTicket.status !== "closed" && (
-                <button
-                  onClick={() => closeTicket(selectedTicket)}
-                  disabled={loading}
-                  className="btn-warning"
-                >
-                  Close Ticket
-                </button>
-              )}
-              <button
-                onClick={() => deleteTicket(selectedTicket)}
-                disabled={loading}
-                className="btn-danger"
-              >
-                Delete Ticket
-              </button>
-              <button
-                onClick={() => setSelectedTicket(null)}
-                className="btn-secondary"
-              >
-                Back to List
-              </button>
-            </div>
-
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto mb-4 border border-gray-600 rounded p-4 bg-vorld-dark-light flex flex-col space-y-3">
-              {messages.length === 0 ? (
-                <p>No messages yet.</p>
-              ) : (
-                messages.map((msg) => (
-                  <div
-                    key={msg.id}
-                    className={`p-3 rounded max-w-[75%] self-start ${
-                      msg.user_id === userId
-                        ? "bg-vorld-blue/50 self-end"
-                        : "bg-vorld-purple/50 self-start"
-                    }`}
-                  >
-                    <p>{msg.message}</p>
-                    <span className="text-xs text-gray-300">
-                      {new Date(msg.created_at).toLocaleString()}
-                    </span>
+                <div>
+                  <div className="font-semibold">{ticket.title}</div>
+                  <div className="text-xs text-muted-foreground">
+                    Status: {ticket.status}{" "}
+                    {ticket.claimed_by && (
+                      <span className="ml-2 italic text-vorld-pink">
+                        Claimed
+                      </span>
+                    )}
                   </div>
-                ))
+                </div>
+                {newReplies[ticket.id] && (
+                  <span className="bg-vorld-pink rounded-full w-3 h-3 inline-block" />
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {canCreateTicket && (
+          <Button
+            onClick={() => setSelectedTicket({ id: "new", title: "", description: "", status: "open", priority: "normal", created_by: userId })}
+            className="mt-4"
+          >
+            + New Ticket
+          </Button>
+        )}
+      </aside>
+
+      {/* Ticket Details & Chat */}
+      <main className="flex-1 bg-vorld-dark/70 rounded-lg p-6">
+        {!selectedTicket && (
+          <div className="text-muted-foreground text-center mt-10">
+            Select a ticket to view details and chat.
+          </div>
+        )}
+
+        {selectedTicket && selectedTicket.id === "new" && (
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">Create Ticket</h2>
+            {/* Replace this with your CreateTicketModal or form */}
+            <p>Form to create new ticket here (implement separately)</p>
+            <Button onClick={() => setSelectedTicket(null)}>Cancel</Button>
+          </div>
+        )}
+
+        {selectedTicket && selectedTicket.id !== "new" && (
+          <>
+            <h2 className="text-2xl font-semibold mb-4">{selectedTicket.title}</h2>
+            <p className="mb-4">{selectedTicket.description}</p>
+            <div className="flex gap-2 mb-4">
+              {role === "admin" && (
+                <>
+                  <Button onClick={() => claimTicket(selectedTicket.id)}>
+                    Claim
+                  </Button>
+                  <Button onClick={() => closeTicket(selectedTicket.id)}>
+                    Close
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    onClick={() => deleteTicket(selectedTicket.id)}
+                  >
+                    Delete
+                  </Button>
+                </>
               )}
             </div>
 
-            {/* Message input */}
-            <div className="flex gap-2">
-              <input
-                type="text"
-                placeholder="Type a message..."
-                value={messageInput}
-                onChange={(e) => setMessageInput(e.target.value)}
-                disabled={loading}
-                className="flex-1 p-2 rounded border border-gray-600 bg-vorld-dark text-white"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") sendMessage();
-                }}
+            {/* Chat component */}
+            <TicketChat ticketId={selectedTicket.id} role={role} />
+
+            {/* Admin settings */}
+            {role === "admin" && (
+              <TicketSettings
+                ticketId={selectedTicket.id}
+                currentTitle={selectedTicket.title}
+                currentPriority={selectedTicket.priority}
               />
-              <button
-                onClick={sendMessage}
-                disabled={loading || !messageInput.trim()}
-                className="btn-primary px-6"
-              >
-                Send
-              </button>
-            </div>
+            )}
           </>
-        ) : (
-          <p>Select a ticket to view details and messages.</p>
         )}
-      </div>
+      </main>
     </div>
   );
 };
 
-export default Tickets;
+export default TicketsPage;
