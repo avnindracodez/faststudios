@@ -1,41 +1,25 @@
-// src/pages/Profile.tsx
-import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from '@/hooks/useAuth';
 
 const ProfilePage = () => {
-  const [user, setUser] = useState<any>(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { data, error } = await supabase.auth.getUser();
-      if (error || !data?.user) return navigate("/login");
-      setUser(data.user);
-    };
-    fetchUser();
-  }, [navigate]);
-
-  if (!user) return null;
+  const { user } = useAuth();
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-vorld-dark text-white px-4 py-12">
-      <div className="glass-card max-w-md w-full p-8 rounded-xl shadow-xl text-center">
-        <img
-          src={user.user_metadata.avatar_url}
-          alt="Avatar"
-          className="w-24 h-24 rounded-full mx-auto mb-4"
-        />
-        <h2 className="text-2xl font-semibold">{user.user_metadata.full_name}</h2>
-        <p className="text-sm text-muted-foreground">{user.email}</p>
-
-        <button
-          onClick={() => navigate("/settings")}
-          className="mt-6 btn-primary w-full"
-        >
-          Go to Settings
-        </button>
-      </div>
+    <div className="vorld-container py-12 text-white">
+      <h1 className="text-3xl font-bold mb-6">Your Profile</h1>
+      {user ? (
+        <div className="glass-card p-6 rounded-lg">
+          <img
+            src={user.user_metadata?.avatar_url}
+            className="w-20 h-20 rounded-full mb-4"
+            alt="avatar"
+          />
+          <p><strong>Username:</strong> {user.user_metadata.full_name}</p>
+          <p><strong>Email:</strong> {user.email}</p>
+          <p><strong>ID:</strong> {user.id}</p>
+        </div>
+      ) : (
+        <p>Please log in.</p>
+      )}
     </div>
   );
 };

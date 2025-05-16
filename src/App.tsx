@@ -32,6 +32,7 @@ const App = () => {
             <Route path="/studio" element={<StudioPage />} />
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/careers" element={<CareersPage />} />
+            <Route path="/auth/callback" element={<AuthCallback />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/profile" element={<ProfilePage />} />
