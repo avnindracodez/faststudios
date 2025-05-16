@@ -1,94 +1,72 @@
+import React from 'react';
+import { Home, Gamepad2, Users, Briefcase, Mail } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 
-import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+const navItems = [
+  { name: 'Home', icon: <Home size={20} />, path: '/' },
+  { name: 'Games', icon: <Gamepad2 size={20} />, path: '/games' },
+  { name: 'Community', icon: <Users size={20} />, path: '/community' },
+  { name: 'Careers', icon: <Briefcase size={20} />, path: '/careers' },
+  { name: 'Contact', icon: <Mail size={20} />, path: '/contact' },
+];
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'Games', href: '/games' },
-    { name: 'Studio', href: '/studio' },
-    { name: 'Community', href: '/community' },
-    { name: 'Careers', href: '/careers' },
-    { name: 'Contact', href: '/contact' },
-  ];
+const SidebarWidget = () => {
+  const location = useLocation();
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'py-3 bg-vorld-darker/80 backdrop-blur-md' : 'py-5 bg-transparent'}`}>
-      <div className="vorld-container flex items-center justify-between">
-        <div className="flex items-center">
-          <Link to="/" className="mr-8">
-            <div className="w-10 h-10 relative overflow-visible">
-              <img 
-                src="https://cdn.discordapp.com/attachments/1363496516643324137/1372608746739597504/l0DKK0m-removebg-preview.png?ex=68276503&is=68261383&hm=8dafdc9afd7b07184e1dfaa1aaf5ce1d5833ee24dc7d2e1c70440ff7080f3ee5&" 
-                alt="Fast Studios Logo" 
-                className="w-full h-full object-contain glow-image"
-              />
-            </div>
-          </Link>
-          <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.href}
-                className="text-sm font-medium hover:text-vorld-blue transition-colors duration-300"
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
-        </div>
-        
-        <div className="hidden md:block">
-          <Button className="btn-primary">Join the Future</Button>
-        </div>
-        
-        <div className="md:hidden">
-          <button 
-            onClick={() => setIsOpen(!isOpen)}
-            className="text-foreground hover:text-vorld-blue"
-            aria-label="Toggle menu"
+    <>
+      {/* Desktop Sidebar */}
+      <div className="fixed top-1/2 left-4 -translate-y-1/2 z-50 hidden sm:flex flex-col items-center gap-4 bg-vorld-darker/80 backdrop-blur-lg p-3 rounded-2xl shadow-lg">
+        {navItems.map((item) => (
+          <Link
+            key={item.name}
+            to={item.path}
+            className={`relative group text-muted-foreground hover:text-vorld-blue transition-colors ${
+              location.pathname === item.path ? 'text-vorld-blue' : ''
+            }`}
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
+            <div className="p-2 rounded-lg hover:bg-vorld-blue/10 transition">
+              {item.icon}
+            </div>
+            <span className="absolute left-12 top-1/2 -translate-y-1/2 px-2 py-1 rounded bg-vorld-darker text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-md whitespace-nowrap">
+              {item.name}
+            </span>
+          </Link>
+        ))}
       </div>
-      
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="fixed inset-0 bg-vorld-darker/95 backdrop-blur-md z-40 md:hidden flex flex-col pt-24 px-6 animate-fade-in">
-          <div className="flex flex-col space-y-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.href}
-                onClick={() => setIsOpen(false)}
-                className="text-xl font-medium hover:text-vorld-blue transition-colors duration-300"
-              >
-                {link.name}
-              </Link>
-            ))}
-            <Button className="btn-primary mt-6 w-full" onClick={() => setIsOpen(false)}>
-              Join the Future
-            </Button>
-          </div>
+
+     {/* Mobile Bottom Navigation - Modern Look */}
+<div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 sm:hidden bg-vorld-darker/70 backdrop-blur-lg border border-vorld-blue/30 rounded-full px-6 py-3 flex justify-between items-center gap-5 shadow-xl max-w-[90%]">
+  {navItems.map((item) => {
+    const isActive = location.pathname === item.path;
+
+    return (
+      <Link
+        key={item.name}
+        to={item.path}
+        className={`flex flex-col items-center justify-center gap-1 text-xs transition-all duration-200 ${
+          isActive ? 'text-vorld-blue font-semibold' : 'text-muted-foreground'
+        }`}
+      >
+        <div
+          className={`p-2 rounded-full transition-all duration-200 ${
+            isActive
+              ? 'bg-vorld-blue/10 text-vorld-blue'
+              : 'hover:bg-white/5'
+          }`}
+        >
+          {item.icon}
         </div>
-      )}
-    </nav>
+        {isActive && (
+          <span className="text-[10px] leading-none">{item.name}</span>
+        )}
+      </Link>
+    );
+  })}
+</div>
+
+    </>
   );
 };
 
-export default Navbar;
+export default SidebarWidget;

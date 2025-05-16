@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -11,28 +10,41 @@ import StudioPage from "./pages/StudioPage";
 import CommunityPage from "./pages/CommunityPage";
 import CareersPage from "./pages/CareersPage";
 import ContactPage from "./pages/ContactPage";
+import { useState } from "react";
+import LoadingScreen from "@/components/LoadingScreen";
+import CustomCursor from "@/components/CustomCursor";
+import Tickets from "./pages/Tickets";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/games" element={<GamesPage />} />
-          <Route path="/studio" element={<StudioPage />} />
-          <Route path="/community" element={<CommunityPage />} />
-          <Route path="/careers" element={<CareersPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  const [loading, setLoading] = useState(true);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        {loading ? (
+          <LoadingScreen onComplete={() => setLoading(false)} />
+        ) : (
+          <BrowserRouter>
+            <CustomCursor />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/games" element={<GamesPage />} />
+              <Route path="/studio" element={<StudioPage />} />
+              <Route path="/community" element={<CommunityPage />} />
+              <Route path="/careers" element={<CareersPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/tickets" element={<Tickets/>} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        )}
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;

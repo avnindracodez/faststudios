@@ -99,10 +99,18 @@ const ServicesSection = () => {
           ))}
         </div>
         
-        <div className="mt-16 text-center">
-          <p className="text-lg mb-6">Need any help?</p>
-          <Button className="btn-primary text-lg">Contact Us</Button>
-        </div>
+<div className="mt-24 text-center py-12 rounded-2xl">
+  <h2 className="text-3xl font-bold mb-3 text-vorld-blue">Need Help?</h2>
+  <p className="text-lg text-muted-foreground mb-6">
+    Got a question, feedback, or just want to reach out? We’d love to hear from you.
+  </p>
+  <a href="/contact">
+    <Button className="btn-primary text-lg px-8 py-3">
+      Contact Us
+    </Button>
+  </a>
+</div>
+
       </div>
     </section>
   );

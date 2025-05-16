@@ -103,12 +103,17 @@ const HeroSection = () => {
               transition={{ delay: 0.5, duration: 0.5 }}
               className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 parallax"
             >
-              <Button className="btn-primary flex items-center gap-2 text-lg">
-                Discord <ArrowRight size={16} />
-              </Button>
-              <Button variant="outline" className="btn-secondary text-lg">
-                View Games
-              </Button>
+  <a href="https://discord.gg/9skc77bSSh" target="_blank" rel="noopener noreferrer">
+  <Button className="btn-primary flex items-center gap-2 text-lg">
+    Discord <ArrowRight size={16} />
+  </Button>
+</a>
+
+  <a href="/games">
+    <Button variant="outline" className="btn-secondary text-lg">
+      View Games
+    </Button>
+  </a>
             </motion.div>
           </motion.div>
           
