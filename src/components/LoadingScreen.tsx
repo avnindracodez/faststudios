@@ -1,23 +1,16 @@
-import React, { useEffect, useState, useRef } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
+import CustomCursor from "@/components/CustomCursor"; // your old cursor
 
-interface LoadingScreenProps {
-  onComplete: () => void;
-}
-
-const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
+const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
   const [progress, setProgress] = useState(0);
   const [isHolding, setIsHolding] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const radius = 60;
-  const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (progress / 100) * circumference;
-
   useEffect(() => {
     if (progress >= 100) {
       if (intervalRef.current) clearInterval(intervalRef.current);
-      onComplete();
+      // small delay for smoothness before finishing
+      setTimeout(() => onComplete(), 300);
       return;
     }
 
@@ -30,16 +23,25 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
     };
   }, [isHolding, progress, onComplete]);
 
+  const radius = 60;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (progress / 100) * circumference;
+
   return (
-    <div className="fixed inset-0 flex flex-col items-center justify-center bg-vorld-dark text-vorld-text font-exo select-none px-6">
-      <motion.h1
-        className="text-5xl sm:text-6xl font-bold mb-10 text-gradient"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
+    <div
+      className="fixed inset-0 flex flex-col items-center justify-center bg-vorld-dark text-vorld-text font-exo select-none px-6"
+      onMouseDown={() => setIsHolding(true)}
+      onMouseUp={() => setIsHolding(false)}
+      onMouseLeave={() => setIsHolding(false)}
+      onTouchStart={() => setIsHolding(true)}
+      onTouchEnd={() => setIsHolding(false)}
+    >
+      {/* Use your old CustomCursor here */}
+      <CustomCursor />
+
+      <h1 className="text-5xl sm:text-6xl font-bold mb-10 text-gradient">
         Fast • Studios
-      </motion.h1>
+      </h1>
 
       <svg
         className="w-36 h-36 mb-8"
@@ -54,7 +56,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
           stroke="#3b3b4f"
           strokeWidth="10"
         />
-        <motion.circle
+        <circle
           cx="75"
           cy="75"
           r={radius}
@@ -64,34 +66,23 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
-          initial={{ strokeDashoffset: circumference }}
-          animate={{ strokeDashoffset: offset }}
-          transition={{ duration: 0.2, ease: "easeOut" }}
+          style={{ transition: "stroke-dashoffset 0.3s ease" }}
         />
       </svg>
 
-      <motion.button
-        className={`mt-4 px-6 py-3 rounded-md font-semibold text-sm tracking-wider transition-colors
-          ${isHolding ? "bg-vorld-purple text-white" : "bg-vorld-blue text-white hover:bg-vorld-purple"}`}
-        onMouseDown={() => setIsHolding(true)}
-        onMouseUp={() => setIsHolding(false)}
-        onMouseLeave={() => setIsHolding(false)}
-        onTouchStart={() => setIsHolding(true)}
-        onTouchEnd={() => setIsHolding(false)}
-        whileTap={{ scale: 0.95 }}
-        aria-label="Hold to speed up loading"
+      <button
+        className={`mt-4 px-6 py-3 rounded-md font-semibold text-sm tracking-wider transition-colors ${
+          isHolding
+            ? "bg-vorld-purple text-white"
+            : "bg-vorld-blue text-white hover:bg-vorld-purple"
+        }`}
       >
         {isHolding ? "Boosting..." : "Hold to Boost Loading"}
-      </motion.button>
+      </button>
 
-      <motion.p
-        className="uppercase text-gray-400 tracking-widest text-sm sm:text-base mt-4"
-        initial={{ opacity: 0.5 }}
-        animate={{ opacity: [0.5, 1, 0.5] }}
-        transition={{ repeat: Infinity, duration: 1.5 }}
-      >
+      <p className="uppercase text-gray-400 tracking-widest text-sm sm:text-base mt-4 animate-pulse">
         Loading — Please wait
-      </motion.p>
+      </p>
 
       <footer className="absolute bottom-5 text-xs text-gray-500 select-none">
         © 2025 Fast Studios. Fueling next-gen play.

@@ -178,3 +178,17 @@ body, html {
 ::-webkit-scrollbar-thumb {
   @apply bg-vorld-blue/50 rounded-full hover:bg-vorld-blue/70 transition-all duration-200;
 }
+
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--cursor-color, #72b1ff);
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s ease, background-color 0.3s ease;
+}

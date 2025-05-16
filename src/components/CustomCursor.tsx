@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
+
 const CustomCursor = () => {
   const [position, setPosition] = useState({ x: -100, y: -100 });
   const [isHovering, setIsHovering] = useState(false);
-  const location = useLocation();
+  let location;
+try {
+  location = useLocation();
+} catch (err) {
+  // Not inside router yet
+  location = null;
+}
+
 
   useEffect(() => {
     const addHoverListeners = () => {
