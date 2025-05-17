@@ -19,10 +19,12 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import { Building2 } from "lucide-react"; 
 
 const navItems = [
   { name: "Home", icon: <Home size={20} />, path: "/" },
   { name: "Games", icon: <Gamepad2 size={20} />, path: "/games" },
+  { name: "Studio", icon: <Building2 size={20} />, path: "/studio" },
   { name: "Community", icon: <Users size={20} />, path: "/community" },
   { name: "Careers", icon: <Briefcase size={20} />, path: "/careers" },
   { name: "Contact", icon: <Mail size={20} />, path: "/contact" },
