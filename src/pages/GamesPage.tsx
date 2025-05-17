@@ -9,11 +9,11 @@ const games = [
   {
     id: 1,
     title: 'Fish',
-    image: 'https://cdn.discordapp.com/attachments/1363496516643324137/1372603358921232385/2aMqNMB.png?ex=68275ffe&is=68260e7e&hm=5a6a5c8154350fd56b1a27cb016c5bd9435537b6f48fc72284d64c6893d062f5&',
+    image: './Fish.png',
     images: [
-      'https://cdn.discordapp.com/attachments/1363496516643324137/1372603358921232385/2aMqNMB.png?ex=68275ffe&is=68260e7e&hm=5a6a5c8154350fd56b1a27cb016c5bd9435537b6f48fc72284d64c6893d062f5&',
-      'https://media.discordapp.net/attachments/1363496516643324137/1372602598196121640/jjVXCAf.png?ex=68275f49&is=68260dc9&hm=229bc78d0b228946fc4ae0001ec2f63c4ea05b09650a4f04119013cc1ffd85cb&=&format=webp&quality=lossless&width=810&height=810',
-      'https://media.discordapp.net/attachments/1363496516643324137/1372602597676023848/l0DKK0m.png?ex=68275f49&is=68260dc9&hm=2699f88103486a7d13f6ee095c0832d39c364afd0ba7b65eb0a0eb3fd472e19d&=&format=webp&quality=lossless&width=810&height=810'
+      './Fish.png',
+      './logo.png',
+      './logo.png'
     ],
     genre: 'Adventure',
     description: 'Dive into mysterious oceans and experience aquatic secrets. Explore, fish, and build your undersea empire surrounded by a vibrant world.',
@@ -34,11 +34,11 @@ const games = [
   {
     id: 2,
     title: 'Royal High',
-    image: 'https://cdn.discordapp.com/attachments/1363496516643324137/1372639025143349308/qiA7vup.png?raw=true',
+    image: './logo.png',
     images: [
-      'https://cdn.discordapp.com/attachments/1363496516643324137/1372639025143349308/qiA7vup.png?raw=true',
-      'https://cdn.discordapp.com/attachments/1363496516643324137/1372639751451310170/RoyalHigh1.png?raw=true',
-      'https://cdn.discordapp.com/attachments/1363496516643324137/1372639751774308352/RoyalHigh2.png?raw=true'
+      './logo.png',
+      './logo.png',
+      './logo.png'
     ],
     genre: 'Adventure',
     description: 'A magical roleplaying game where elegance meets fantasy. Attend classes, dress in dazzling outfits, and explore a dreamy realm filled with secrets, fashion, and royal drama.',
@@ -59,11 +59,11 @@ const games = [
   {
     id: 3,
     title: 'Pokemon Tower Defense',
-    image: 'https://cdn.discordapp.com/attachments/1363496516643324137/1372603049759080598/tHr7moi.png?ex=68275fb4&is=68260e34&hm=eaadcff909d4535673a7d2d160fc468e6493a11768f75a496507ed9797ee362b&',
+    image: './PTD1.png',
     images: [
-      'https://cdn.discordapp.com/attachments/1363496516643324137/1372644567689728060/MqNxRjG.png?ex=6827865f&is=682634df&hm=fbdbb884d5622d8da85e580b14fa45e29c45042e5e58dd45863a26e55fc2cb8a&',
-      'https://cdn.discordapp.com/attachments/1363496516643324137/1372644989418606722/m4lguJR.png?ex=682786c3&is=68263543&hm=a45fc6cae8f706ca2d53fd87910085a0f40fa7611b093d795f3e47878e9e2809&',
-      'https://cdn.discordapp.com/attachments/1363496516643324137/1372603049759080598/tHr7moi.png?ex=68275fb4&is=68260e34&hm=eaadcff909d4535673a7d2d160fc468e6493a11768f75a496507ed9797ee362b&'
+      './PTD2.png',
+      './PTD3.png',
+      './PTD1.png'
     ],
     genre: 'Action',
     description: 'Build your dream team and defend against waves of enemies using your Pokémon! Catch, trade, and evolve Pokémon across various maps while ranking up to become the ultimate Pokémon Master.',

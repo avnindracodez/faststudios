@@ -176,7 +176,7 @@ const CareersPage = () => {
       quote: "Working here has allowed me to grow as a leader while collaborating with an incredibly talented team. I take pride in turning vision into action and helping our projects reach their full potential.",
       name: "@9sets",
       role: "Project Manager",
-      image: "https://cdn.discordapp.com/attachments/1363496516643324137/1372640257987580025/bx3mxee.webp?ex=6827825b&is=682630db&hm=e17ad2a731784686f227ff752d05315bd7d3a120a61e6f59b374b6c3011ee391&"
+      image: "./setdupe.png"
     }
   ];
 
