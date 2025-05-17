@@ -1,5 +1,4 @@
-// src/components/Navbar.tsx
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Home,
   Gamepad2,
@@ -12,7 +11,7 @@ import {
   LogIn,
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
+import { supabase } from "@/integrations/supabase/client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -31,9 +30,27 @@ const navItems = [
 
 const Navbar = () => {
   const location = useLocation();
-  const session = useSession();
-  const supabase = useSupabaseClient();
   const navigate = useNavigate();
+  const [user, setUser] = useState<any>(null);
+
+  // Fetch user on mount
+  useEffect(() => {
+    const fetchUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    fetchUser();
+
+    const { data: listener } = supabase.auth.onAuthStateChange(() => {
+      fetchUser();
+    });
+
+    return () => {
+      listener?.subscription?.unsubscribe();
+    };
+  }, []);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -42,7 +59,7 @@ const Navbar = () => {
 
   return (
     <>
-      {/* 📍 Sidebar for Desktop */}
+      {/* Desktop Sidebar */}
       <div className="fixed top-1/2 left-4 -translate-y-1/2 z-50 hidden sm:flex flex-col items-center gap-4 bg-vorld-darker/80 backdrop-blur-lg p-3 rounded-2xl shadow-lg">
         {navItems.map((item) => (
           <Link
@@ -61,26 +78,19 @@ const Navbar = () => {
           </Link>
         ))}
 
-        {/* 👤 Login / Avatar Button */}
-        {!session?.user ? (
-          <Link
-            to="/login"
-            className="text-muted-foreground hover:text-vorld-blue p-2 rounded-lg hover:bg-vorld-blue/10 transition"
-          >
-            <LogIn size={20} />
-          </Link>
-        ) : (
+        {/* Avatar or Login Icon */}
+        {user ? (
           <DropdownMenu>
-            <DropdownMenuTrigger className="focus:outline-none mt-1">
-              <Avatar className="w-9 h-9 cursor-pointer">
+            <DropdownMenuTrigger className="focus:outline-none">
+              <Avatar className="w-9 h-9 mt-2 cursor-pointer">
                 <AvatarImage
                   src={
-                    session.user.user_metadata.avatar_url ||
+                    user?.user_metadata?.avatar_url ||
                     "https://api.dicebear.com/7.x/identicon/svg?seed=fast"
                   }
                 />
                 <AvatarFallback>
-                  {session.user.email?.charAt(0).toUpperCase() || "U"}
+                  {user?.email?.charAt(0).toUpperCase() || "U"}
                 </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
@@ -108,10 +118,17 @@ const Navbar = () => {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+        ) : (
+          <Link
+            to="/login"
+            className="mt-4 p-2 rounded-full hover:bg-white/10 transition text-muted-foreground"
+          >
+            <LogIn size={20} />
+          </Link>
         )}
       </div>
 
-      {/* 📱 Mobile Bottom Navigation */}
+      {/* Mobile Bottom Navbar */}
       <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 sm:hidden bg-vorld-darker/70 backdrop-blur-lg border border-vorld-blue/30 rounded-full px-6 py-3 flex justify-between items-center gap-5 shadow-xl max-w-[90%]">
         {navItems.map((item) => {
           const isActive = location.pathname === item.path;
@@ -137,28 +154,23 @@ const Navbar = () => {
           );
         })}
 
-        {/* 👤 Mobile Login / Avatar */}
-        {!session?.user ? (
-          <Link
-            to="/login"
-            className="text-muted-foreground hover:text-vorld-blue flex flex-col items-center gap-1"
-          >
-            <LogIn size={20} />
-            <span className="text-[10px]">Login</span>
-          </Link>
-        ) : (
+        {user ? (
           <Link to="/profile">
-            <Avatar className="w-8 h-8 border border-vorld-blue">
+            <Avatar className="w-8 h-8">
               <AvatarImage
                 src={
-                  session.user.user_metadata.avatar_url ||
+                  user?.user_metadata?.avatar_url ||
                   "https://api.dicebear.com/7.x/identicon/svg?seed=fast"
                 }
               />
               <AvatarFallback>
-                {session.user.email?.charAt(0).toUpperCase() || "U"}
+                {user?.email?.charAt(0).toUpperCase() || "U"}
               </AvatarFallback>
             </Avatar>
+          </Link>
+        ) : (
+          <Link to="/login">
+            <LogIn className="w-5 h-5 text-muted-foreground" />
           </Link>
         )}
       </div>
