@@ -12,7 +12,7 @@ function truncate(text, max = 1024) {
   if (!text) return "N/A";
   return text.length > max ? text.slice(0, max) + "..." : text;
 }
-const handler = async (req)=>{
+const handler = async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, {
       headers: corsHeaders
@@ -61,7 +61,24 @@ const handler = async (req)=>{
           icon_url: "https://vorld-studio.com/favicon.ico"
         }
       };
-    } else {
+    } else if (body.type === "ticket-message") {
+      embed = {
+        title: `💬 New Message in Ticket`,
+        color: 0x00c3ff,
+        description: body.message ? "```" + truncate(body.message, 900) + "```" : "*No message provided*",
+        fields: [
+          { name: "👤 From", value: safe(body.name), inline: true },
+          { name: "✉️ Email", value: body.email ? `[${body.email}](mailto:${body.email})` : "N/A", inline: true },
+          { name: "Ticket ID", value: safe(body.ticketId), inline: true }
+        ],
+        timestamp: new Date().toISOString(),
+        footer: {
+          text: "Fast Studios Ticket Bot",
+          icon_url: "https://vorld-studio.com/favicon.ico",
+        }
+      };
+    }
+    else {
       // CONTACT FORM EMBED
       embed = {
         title: "📬 New Contact Form Submission!",
@@ -96,6 +113,7 @@ const handler = async (req)=>{
         }
       };
     }
+
     const discordBody = JSON.stringify({
       embeds: [
         embed
