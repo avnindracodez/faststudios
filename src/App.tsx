@@ -11,7 +11,7 @@ import LoadingScreen from "./components/LoadingScreen";
 import CustomCursor from "./components/CustomCursor";
 import LoginPage from "./pages/Login";
 import TicketsPage from "./pages/Tickets";
-import Navbar from "@/components/Navbar"; 
+import Navbar from "./components/Navbar"; 
 import ProfilePage from "./pages/Profile";
 import SettingsPage from "./pages/Settings";
 
