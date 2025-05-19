@@ -1,31 +1,24 @@
-import type { APIRoute } from "astro";
-import fs from "fs";
-import path from "path";
+// pages/api/upload.ts
+import type { NextApiRequest, NextApiResponse } from "next";
 
-export const prerender = false; // dynamic route
-
-export const POST: APIRoute = async ({ request }) => {
-  const { prefix, fileName, fileData } = await request.json();
-
-  if (!prefix || !fileName || !fileData) {
-    return new Response(JSON.stringify({ error: "Missing fields" }), { status: 400 });
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method Not Allowed" });
   }
 
-  const uploadDir = path.resolve(`./public/content/${prefix}`);
-  const filePath = path.join(uploadDir, fileName);
+  const { link, prefix } = req.body;
+
+  if (!link || !prefix) {
+    return res.status(400).json({ error: "Missing 'link' or 'prefix'" });
+  }
 
   try {
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
-    }
+    const fileName = link.split("/").pop();
+    const converted = `https://faststudios.online/content/${prefix}/${fileName}`;
 
-    fs.writeFileSync(filePath, Buffer.from(fileData, "base64"));
-
-    return new Response(JSON.stringify({ success: true, url: `/content/${prefix}/${fileName}` }), {
-      status: 200,
-    });
-  } catch (err) {
-    console.error("Upload error:", err);
-    return new Response(JSON.stringify({ error: "Failed to save file" }), { status: 500 });
+    return res.status(200).json({ converted });
+  } catch (error) {
+    console.error("Upload handler error:", error);
+    return res.status(500).json({ error: "Server Error" });
   }
-};
+}
